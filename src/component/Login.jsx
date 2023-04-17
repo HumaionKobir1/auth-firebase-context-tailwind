@@ -1,16 +1,39 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
+    const {signIn} = useContext(AuthContext);
+
+    const handleLogin = event => {
+        event.preventDefault();
+
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password);
+
+        signIn(email, password)
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
+            form.reset();
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
+    }
+
     const handleShowPassword = event => {
         setShowPassword(event.target.checked);
+        
     }
     return (
         <div className='mx-auto md:w-2/4 bg-white rounded-lg shadow-md p-8 mt-10'>
         <h1 className='text-2xl font-semibold text-center'>Please Login</h1>
-        <form  className="w-full max-w-sm mx-auto mt-10">
+        <form onSubmit={handleLogin} className="w-full max-w-sm mx-auto mt-10">
             <div className="mb-4">
                 <label htmlFor="email" className="block text-gray-700 font-bold mb-2">Email</label>
                 <input type="email"  name='email' id="email" placeholder="Enter your email" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required/>

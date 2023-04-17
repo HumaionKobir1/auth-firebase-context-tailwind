@@ -6,8 +6,8 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
 
 
-    const {user} = useContext(AuthContext);
-    console.log(user)
+    const {user, createUser} = useContext(AuthContext);
+    // console.log(user, createUser)
 
     const handleRegister = event => {
         event.preventDefault();
@@ -16,6 +16,16 @@ const Register = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
         console.log(name, email, password);
+
+        createUser(email, password)
+        .then(result => {
+            const logged = result.user;
+            console.log(logged);
+            form.reset()
+        }) 
+        .catch(error => {
+            console.log(error.message);
+        })
     }
 
 
