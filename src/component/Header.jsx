@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Header = () => {
+    const {user, logOut} = useContext(AuthContext);
+
+    const handleLogOut = () => {
+        logOut()
+        .then(() => {})
+        .catch(error => console.log(error.message))
+    }
     return (
         <div className='bg-primary'>
             <div className='container mx-auto'>
@@ -24,6 +32,14 @@ const Header = () => {
                         </li>
                         <li className='normal-case text-xl'><Link to="/login">Login</Link></li>
                         <li className='normal-case text-xl'><Link to="/register">Register</Link></li>
+                        {
+                            user ? 
+                                <div>
+                                    <span>{user.email}</span>
+                                    <button onClick={handleLogOut} className='btn btn-xs'>Sign out</button>
+                                </div>
+                            : <Link to="/login">Login</Link>
+                        }
                         </ul>
                     </div>
                 </div>
