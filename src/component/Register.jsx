@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
+
+
+    const {user} = useContext(AuthContext);
+    console.log(user)
 
     const handleRegister = event => {
         event.preventDefault();
