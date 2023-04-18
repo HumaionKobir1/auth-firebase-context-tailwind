@@ -5,7 +5,8 @@ import { AuthContext } from '../providers/AuthProvider';
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
 
-    const {signIn} = useContext(AuthContext);
+    const {signIn, signInWithGoogle} = useContext(AuthContext);
+    console.log(signInWithGoogle);
 
     const handleLogin = event => {
         event.preventDefault();
@@ -20,6 +21,17 @@ const Login = () => {
             const loggedUser = result.user;
             console.log(loggedUser);
             form.reset();
+        })
+        .catch(error => {
+            console.log(error.message);
+        })
+    }
+    
+    const handleGoogleSignIn = () => {
+        signInWithGoogle()
+        .then(result => {
+            const loggedUser = result.user;
+            console.log(loggedUser);
         })
         .catch(error => {
             console.log(error.message);
@@ -63,6 +75,10 @@ const Login = () => {
         </form>
         <div className='mt-4 text-center'>
             <p>New to this website? Please <Link to='/register' className='text-blue-500 hover:text-blue-800'>Register</Link></p>
+        </div>
+
+        <div className='grid text-center w-52 mx-auto mt-3 mb-3'>
+            <button className='btn btn-primary' onClick={handleGoogleSignIn}>Sign in with Google</button>
         </div>
 
     </div>
