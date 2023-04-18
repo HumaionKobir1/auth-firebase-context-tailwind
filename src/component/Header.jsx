@@ -32,13 +32,15 @@ const Header = () => {
                         </li>
                         <li className='normal-case text-xl'><Link to="/login">Login</Link></li>
                         <li className='normal-case text-xl'><Link to="/register">Register</Link></li>
+                        <li className='normal-case text-xl'><Link to="/order">Order</Link></li>
+                        { user && <li className='normal-case text-xl'><Link to="/profile">Profile</Link></li>}
                         {
                             user ? 
-                                <div>
+                                <div className='mt-3 ml-2'>
                                     <span>{user.email}</span>
-                                    <button onClick={handleLogOut} className='btn btn-xs'>Sign out</button>
+                                    <button onClick={handleLogOut} className='btn btn-xs ml-2'>Sign out</button>
                                 </div>
-                            : <Link to="/login">Login</Link>
+                            : <Link className='ml-5 btn btn-xs mt-3' to="/login">Login</Link>
                         }
                         </ul>
                     </div>
